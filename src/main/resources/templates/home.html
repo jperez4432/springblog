@@ -2,9 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Home</title>
+    <title>Welcome!</title>
+    <th:block th:include="partials/styles.html :: styles"></th:block>
 </head>
 <body>
-<h1>This is the home page</h1>
+<h1 class="bg-primary">This is the home page</h1>
+
+<th:block th:include="partials/scripts.html :: scripts"></th:block>
+
 </body>
 </html>
