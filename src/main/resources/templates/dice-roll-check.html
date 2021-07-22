@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Checking your guess</title>
+</head>
+<body>
+<h1>Checking guess</h1>
+<p>You guessed: <span th:text="${n}"></span></p>
+<p>The die rolled: <span th:text="${outcome}"></span></p>
+<p th:if="${check}">You are correct!</p>
+<p th:if="${!check}">You are wrong!</p>
+</body>
+</html>
