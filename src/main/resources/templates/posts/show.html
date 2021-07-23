@@ -10,6 +10,9 @@
             <h3 class="card-title" th:text="${post.title}" />
             <p th:text="${post.body}" class="i-like-paragraphs" />
             <br />
+            <form th:action="@{/posts/delete/{id}(id = ${post.id})}" method="post">
+                <button class="btn-small btn-primary">Delete Post</button>
+            </form>
         </div>
     </div>
 </main>

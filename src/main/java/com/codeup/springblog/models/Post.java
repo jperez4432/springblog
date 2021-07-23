@@ -7,6 +7,8 @@ import javax.persistence.*;
 @Table(name = "posts")
 public class Post {
 
+    public Post(){}
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -14,10 +16,9 @@ public class Post {
     @Column(nullable = false, length = 140)
     private String title;
 
-    @Column (nullable = false)
+    @Column (nullable = false, length = 600)
     private String body;
 
-    public Post(){}
 
     public Post( Long id ,String title, String body) {
         this.title = title;
