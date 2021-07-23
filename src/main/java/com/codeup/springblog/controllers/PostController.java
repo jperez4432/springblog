@@ -20,6 +20,17 @@ public class PostController {
         return "posts/index";
     }
 
+    @GetMapping("/join")
+    public String showJoinForm(){
+        return "join";
+    }
+
+    @PostMapping("/join")
+    public String joinCohort(@RequestParam(name = "cohort") String cohort, Model model){
+        model.addAttribute("cohort", "Welcome to " + cohort + "!");
+        return "join";
+    }
+
     @GetMapping("/posts/{id}")
     public String singlePost(@PathVariable long id, Model model) {
         Post post = new Post("Jeff buys bicycle.", "No one know why. Must really like the feeling of the wind on his face.");

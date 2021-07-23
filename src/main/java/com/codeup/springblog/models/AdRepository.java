@@ -7,5 +7,5 @@ public interface AdRepository extends JpaRepository<Ad, Long> {
     Ad findById(long id);
 
     @Query("from Ad a where a.title like %:term%")
-    Ad findByTitle(String term);
+    Ad findFirstByTitle(String term);
 }

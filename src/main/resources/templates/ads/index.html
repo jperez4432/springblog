@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="partials/header :: head ('Viewing All Posts')" />
+<body class="main">
+<nav th:replace="partials/navbar :: navbar" />
+<header></header>
+<main class="container">
+    <div class="card head-card">
+        <div class="card-content">
+            <h4 class="card-title">Viewing All Ads</h4>
+            <p>Click any post to view all of its content.</p>
+        </div>
+    </div>
+    <div th:each="ad : ${ads}">
+        <div class="card offwhite-body">
+            <div class="card-content preview-post">
+                <h4 class="card-title" th:text="${ad.title}" />
+                <p th:text="${ad.description}" />
+            </div>
+            <div class="small-space" />
+        </div>
+    </div>
+</main>
+<footer th:replace="partials/footer :: footer" />
+</body>
+</html>

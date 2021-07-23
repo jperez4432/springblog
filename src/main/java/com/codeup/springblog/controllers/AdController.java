@@ -32,7 +32,7 @@ public class AdController {
 
     @GetMapping("/ads/first/{title}")
     public String viewOneByTitle(@PathVariable String title, Model model) {
-        Ad ad = adDao.findByTitle(title);
+        Ad ad = adDao.findFirstByTitle(title);
         model.addAttribute("ad", ad);
         return "ads/show";
     }
