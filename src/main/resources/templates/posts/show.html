@@ -5,10 +5,10 @@
 <nav th:replace="partials/navbar :: navbar" />
 <header></header>
 <main class="container">
-    <div class="card offwhite-body">
+    <div class="card grey-body">
         <div class="card-content">
             <h3 class="card-title" th:text="${post.title}" />
-            <p th:text="${post.body}" class="i-like-paragraphs" />
+            <p th:text="${post.body}" />
             <br />
             <form th:action="@{/posts/delete/{id}(id = ${post.id})}" method="post">
                 <button class="btn-small btn-primary">Delete Post</button>
