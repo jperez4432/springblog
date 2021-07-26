@@ -36,4 +36,23 @@ public class AdController {
         model.addAttribute("ad", ad);
         return "ads/show";
     }
+
+
+    @GetMapping("/ads/create")
+    public String showCreateForm() {
+        return "ads/create";
+    }
+
+    @PostMapping("/ads/create")
+    public String create(
+            @RequestParam(name = "title") String title,
+            @RequestParam(name = "description") String description
+    ) {
+        Ad ad = new Ad();
+        ad.setTitle(title);
+        ad.setDescription(description);
+        // save the ad...
+        return "ads/show";
+    }
+
 }
