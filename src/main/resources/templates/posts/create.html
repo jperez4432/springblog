@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="partials/header :: head ('Viewing All Posts')" />
+<body class="main">
+<nav th:replace="partials/navbar :: navbar" />
+<header></header>
+
+<main class="container">
+    <div class="card">
+        <div class="card-content">
+            <form action="/posts/create" th:action="@{/posts/create}" method="post">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="title" name="title" type="text" class="validate" />
+                        <label for="title">Title</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <textarea id="body" name="body"></textarea>
+                        <label for="body">Body</label>
+                    </div>
+                </div>
+                <button type="submit" value="submit" class="btn-primary btn-small">Submit</button>
+            </form>
+        </div>
+    </div>
+</main>
+
+<!--<form action="/ads/create" method="post">-->
+<!--    Title:-->
+<!--    <input name="title" />-->
+<!--    <br />-->
+<!--    Description:-->
+<!--    <input name="description" />-->
+<!--    <br />-->
+<!--    <input type="submit" />-->
+<!--</form>-->
+</body>
+</html>

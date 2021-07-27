@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,6 +15,8 @@ public class User {
     private String email;
     @Column(nullable = false)
     private String password;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Ad> ads;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Post> posts;
 
@@ -29,11 +31,12 @@ public class User {
         this.password = password;
     }
 
-    public User(long id, String username, String email, String password, List<Post> posts) {
+    public User(long id, String username, String email, String password, List<Ad> ads, List<Post> posts) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
+        this.ads = ads;
         this.posts = posts;
     }
 
@@ -67,6 +70,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Ad> getAds() {
+        return ads;
+    }
+
+    public void setAds(List<Ad> ads) {
+        this.ads = ads;
     }
 
     public List<Post> getPosts() {

@@ -9,15 +9,16 @@
         <div class="card-content">
             <h3 class="card-title" th:text="${post.title}" />
             <p th:text="${post.body}" />
-            <br />
+            <p style="display: flex; justify-content: flex-end;" th:text="${post.user.email}" />
+            <br/>
+            <a th:href="@{/posts/edit/{id}(id = ${post.id})}"
+               class="btn-primary btn-small">Edit Post</a>
             <form th:action="@{/posts/delete/{id}(id = ${post.id})}" method="post">
-                <button class="btn-small btn-primary">Delete Post</button>
+                <button class="btn-small btn-danger">Delete Post</button>
             </form>
         </div>
     </div>
 </main>
 <footer th:replace="partials/footer :: footer" />
-<!--<script th:replace="partials/david-partials :: m-script" />-->
-<!--<script th:replace="partials/david-partials :: j-query" />-->
 </body>
 </html>
