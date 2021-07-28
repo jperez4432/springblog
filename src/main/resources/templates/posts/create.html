@@ -9,16 +9,16 @@
 <main class="container">
     <div class="card">
         <div class="card-content">
-            <form action="/posts/create" th:action="@{/posts/create}" method="post">
+            <form action="/posts/create" th:action="@{/posts/create}" method="post"  th:object="${post}">
                 <div class="row">
-                    <div class="input-field col s12">
-                        <input id="title" name="title" type="text" class="validate" />
+                    <div class="input-field col-12">
+                        <input id="title" name="title" type="text" class="validate" th:field="*{title}"/>
                         <label for="title">Title</label>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="input-field col s12">
-                        <textarea id="body" name="body"></textarea>
+                    <div class="input-field col-12">
+                        <textarea id="body" name="body" th:field="*{body}"></textarea>
                         <label for="body">Body</label>
                     </div>
                 </div>

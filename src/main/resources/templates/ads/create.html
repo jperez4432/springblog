@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title></title>
+</head>
+<body>
+<!--In order to access our model attribute that is passed in our GetMapping,
+we need to have our th:object attribute, with our ad model attribute as the value.-->
+<form action="/ads/create" th:action="@{/ads/create}" method="post" th:object="${ad}">
+    Title:
+    <!--By using our selection expression syntax, *{}, Thymeleaf will recognize our model fields
+     by using th:field instead of our typical name attribute in our inputs.-->
+    <input th:field="*{title}" th:value="*{title}"/>
+    <br />
+    Description:
+    <textarea th:field="*{description}" th:value="*{description}"/>
+    <br />
+    <input type="submit" />
+</form>
+</body>
+</html>

@@ -11,11 +11,12 @@
             <p th:text="${post.body}" />
             <p style="display: flex; justify-content: flex-end;" th:text="${post.user.email}" />
             <br/>
-            <a th:href="@{/posts/edit/{id}(id = ${post.id})}"
+            <a th:href="@{/posts/{id}/edit(id = ${post.id})}"
                class="btn-primary btn-small">Edit Post</a>
             <form th:action="@{/posts/delete/{id}(id = ${post.id})}" method="post">
                 <button class="btn-small btn-danger">Delete Post</button>
             </form>
+
         </div>
     </div>
 </main>

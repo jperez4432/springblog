@@ -7,18 +7,16 @@
 <header></header>
 <main class="container">
     <div class="card grey-body">
-
-            <form action="" th:action="@{/posts/edit/{id}(id=${id})}" method="post">
+            <form action="" th:action="@{/posts/{id}/edit(id=${id})}" method="post" th:object="${post}">
 
                     <div class="card-title input-field">
                         <label for="title">Title</label>
-                        <input id="title" name="title" type="text" class="validate" th:value="${post.title}" />
+                        <input id="title" name="title" type="text" class="validate" th:field="*{title}" th:value="*{title}" />
                     </div>
-
 
                     <div class="card-body input-field">
                         <label for="body">Body</label>
-                        <textarea id="body" name="body" th:text="${post.body}"></textarea>
+                        <textarea id="body" name="body" th:field="*{body}" th:value="*{body}"></textarea>
                     </div>
 
                 <button type="submit" value="submit" class="btn-small btn-primary accent-3">Submit</button>
