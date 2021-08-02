@@ -9,6 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.codeup.springblog.services.EmailService;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class PostController {
     private final PostRepository postDao;
