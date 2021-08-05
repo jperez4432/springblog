@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
+@Table(name="users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,11 +17,20 @@ public class User {
     private String password;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Ad> ads;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="user")
     private List<Post> posts;
 
 
     public User() {
+    }
+
+    public User(User copy) {
+        id = copy.id;
+        email = copy.email;
+        username = copy.username;
+        password = copy.password;
+        ads = copy.ads;
+        posts = copy.posts;
     }
 
     public User(long id, String username, String email, String password) {

@@ -1,4 +1,4 @@
-package repositories;
+package com.codeup.springblog.repositories;
 
 import com.codeup.springblog.models.Ad;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,5 +8,6 @@ public interface AdRepository extends JpaRepository<Ad, Long> {
     Ad findById(long id);
 
     @Query("from Ad a where a.title like %:term%")
-    Ad findFirstByTitle(String term);
+    Ad findByTitle(String term);
+
 }

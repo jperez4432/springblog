@@ -34,31 +34,33 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                /* Login configuration */
                 .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/posts") // user's home page, it can be any URL
-                .permitAll() // Anyone can go to the login page
-                /* Logout configuration */
+                .defaultSuccessUrl("/posts")
+                .permitAll()
                 .and()
                 .logout()
-                .logoutSuccessUrl("/login?logout") // append a query string value
-                /* Pages that can be viewed without having to log in */
-                .and()
-                .authorizeRequests()
-                .antMatchers("/", "/ads", "/posts", "/posts/{id}", "/ads/{id}") // anyone can see the home and the ads pages
+                .logoutSuccessUrl("/login?logout")
                 .permitAll()
-                /* Pages that require authentication */
                 .and()
                 .authorizeRequests()
                 .antMatchers(
-                        "/ads/create", // only authenticated users can create ads
-                        "/ads/{id}/edit", // only authenticated users can edit ads
                         "/posts/create",
-                        "/posts/{id}/edit",
-                        "/posts/{id}/delete"
-                )
+                        "/ads/create")
                 .authenticated()
-        ;
+                .and()
+                .authorizeRequests()
+                .antMatchers(
+                        "/",
+                        "/ads",
+                        "/posts",
+                        "/posts/{id}",
+                        "/ads/{id}",
+                        "/register",
+                        "/js/**", // had to add this to not restrict scripts
+                        "/css/**", // had to add this to not restrict stylesheets
+                        "/img/**") // had to add this to not restrict images
+                .permitAll()
+                .anyRequest().authenticated();
     }
 }

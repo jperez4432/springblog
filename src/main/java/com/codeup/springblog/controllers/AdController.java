@@ -1,8 +1,8 @@
 package com.codeup.springblog.controllers;
 
 import com.codeup.springblog.models.Ad;
-import repositories.AdRepository;
-import repositories.UserRepository;
+import com.codeup.springblog.repositories.AdRepository;
+import com.codeup.springblog.repositories.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +34,7 @@ public class AdController {
 
     @GetMapping("/ads/first/{title}")
     public String viewOneByTitle(@PathVariable String title, Model model) {
-        Ad ad = adDao.findFirstByTitle(title);
+        Ad ad = adDao.findByTitle(title);
         model.addAttribute("ad", ad);
         return "ads/show";
     }
@@ -71,5 +71,4 @@ public class AdController {
         adDao.delete(adDao.findById(id));
         return "redirect:/ads";
     }
-
 }
