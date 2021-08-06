@@ -5,9 +5,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-class HomeController {
+public class HomeController {
     @GetMapping("/")
-    public String Home() {
-        return "home";
+    @ResponseBody
+    public String showLanding() {
+        return "<h1>This is the landing page!</h1>";
     }
 }

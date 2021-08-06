@@ -1,14 +1,16 @@
 package com.codeup.springblog.controllers;
 
-// import com.codeup.springblog.services.EmailService;
+import com.codeup.springblog.services.EmailService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 class HelloController {
+    private final EmailService emailSvc;
 
-    public HelloController() {
+    public HelloController(EmailService emailSvc) {
+        this.emailSvc = emailSvc;
     }
 
     @GetMapping("/hello")
@@ -18,22 +20,22 @@ class HelloController {
     }
 
     @GetMapping("/hello/{name}")
-    public String sayHello(@PathVariable String name, Model model) {
-        model.addAttribute("name", name);
-        return "hello";
+    @ResponseBody
+    public String sayHello(@PathVariable String name) {
+        return "<h1>Hello " + name + "!</h1>";
     }
-//
-//    @GetMapping("/join")
-//    public String showJoinForm() {
-//        return  "join";
-//    }
 
-//    @PostMapping("/join")
-//    public String joinCohort(@RequestParam(name = "cohort") String cohort, Model model) {
-//        model.addAttribute("cohort", "Welcome to " + cohort + "!");
-//        return "join";
-//    }
+    @GetMapping("/join")
+    public String showJoinForm() {
+        return "join";
+    }
 
+    @PostMapping("/join")
+    public String joinCohort(@RequestParam(name = "cohort") String cohort, Model model) {
+        model.addAttribute("cohort", "Welcome to " + cohort + "!");
+        emailSvc.prepareAndSend("jperez4432@gmail.com", "hello! welcome to " + cohort + "!", "Thank you for attending our web development program!");
+        return "join";
+    }
 
     @GetMapping("/number/{num}")
     @ResponseBody
@@ -41,7 +43,7 @@ class HelloController {
         return num;
     }
 
-    @GetMapping("/hello/in/{color}")
+    @RequestMapping(path = "/hello/in/color", method = RequestMethod.GET)
     @ResponseBody
     public String helloInColor(@PathVariable String color) {
         return "<h1 style=\"color: " + color + "\">Hello in " + color + "!</h1>";

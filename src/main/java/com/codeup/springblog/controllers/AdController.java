@@ -13,62 +13,47 @@ import org.springframework.web.bind.annotation.*;
 public class AdController {
     private final AdRepository adDao;
     private final UserRepository userDao;
-//need to find the issue within this
+
     public AdController(AdRepository adDao, UserRepository userDao) {
-        this.adDao = adDao;
+        this.adDao = adDao; //singleton pattern
         this.userDao = userDao;
     }
 
     @GetMapping("/ads")
-    public String index(Model model) {
+    public String index(Model model){
         model.addAttribute("ads", adDao.findAll());
         return "ads/index";
     }
 
     @GetMapping("/ads/{n}")
-    public String viewOne(@PathVariable long n, Model model) {
-        Ad ad = adDao.findById(n);
-        model.addAttribute("ad", ad);
+    public String viewOne(@PathVariable long n, Model model){
+        model.addAttribute("ad", adDao.findById(n));
         return "ads/show";
     }
 
     @GetMapping("/ads/first/{title}")
-    public String viewOneByTitle(@PathVariable String title, Model model) {
-        Ad ad = adDao.findByTitle(title);
+    public String viewOneByTitle(@PathVariable String title, Model model){
+        Ad ad = adDao.findFirstByTitle(title);
         model.addAttribute("ad", ad);
         return "ads/show";
     }
 
     @GetMapping("/ads/create")
-    public String showCreateForm(Model model) {
+    public String createAdForm(Model model){
         model.addAttribute("ad", new Ad());
         return "ads/create";
     }
 
     @PostMapping("/ads/create")
-    public String createAd(@ModelAttribute Ad ad) {
-        // Once the user submits the form to create an Ad, we want to assign a user to the Ad.
+    public String createAd(@ModelAttribute Ad ad){
         ad.setUser(userDao.getById(1L));
-        // Since we have our form binding our model data, we can just just save the Ad directly, without having to use RequestParam.
         adDao.save(ad);
         return "redirect:/ads";
     }
 
-    @GetMapping("ads/{id}/edit")
-    public String editAdForm(@PathVariable long id, Model model){
-        Ad adToEdit = adDao.getById(id);
-        model.addAttribute("ad", adToEdit);
-        return "ads/create";
-    }
-
-    @PostMapping("/ads/{id}/edit")
-    public String editAd(@PathVariable long id, @ModelAttribute Ad ad) {
-        return createAd(ad);
-    }
-
     @PostMapping("ads/{id}/delete")
-    public String deleteAd(@PathVariable long id) {
+    public String deleteAd(@PathVariable long id){
         adDao.delete(adDao.findById(id));
-        return "redirect:/ads";
+        return "redirect: /ads";
     }
 }

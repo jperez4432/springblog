@@ -15,9 +15,7 @@ import org.springframework.mock.web.MockHttpSession;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-
 import javax.servlet.http.HttpSession;
-
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
@@ -27,11 +25,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = SpringblogApplication.class)
 @AutoConfigureMockMvc
-public class AdIntegrationTests {
+public class AdsIntegrationTests {
 
     private User testUser;
     private HttpSession httpSession;
@@ -51,21 +48,21 @@ public class AdIntegrationTests {
     @Before
     public void setup() throws Exception {
 
-        // Just like in Junit TDD, we can prep some items for testing by using the @Before annotation on a setup() method
         testUser = userDao.findByUsername("testUser");
-        if (testUser == null) {
-            // We weren't able to find the testUser, so let's create them!
+
+        // Creates the test user if not exists
+        if(testUser == null){
             User newUser = new User();
             newUser.setUsername("testUser");
-            newUser.setPassword(passwordEncoder.encode("password"));
-            newUser.setEmail("test-user@codeup.com");
+            newUser.setPassword(passwordEncoder.encode("pass"));
+            newUser.setEmail("testUser@codeup.com");
             testUser = userDao.save(newUser);
         }
 
-        // Throws a Post request to /login and expect a redirection to the posts index page after being logged in
+        // Throws a Post request to /login and expect a redirection to the Posts index page after being logged in
         httpSession = this.mvc.perform(post("/login").with(csrf())
-                .param("username", "testUser")
-                .param("password", "password"))
+                        .param("username", "testUser")
+                        .param("password", "pass"))
                 .andExpect(status().is(HttpStatus.FOUND.value()))
                 .andExpect(redirectedUrl("/posts"))
                 .andReturn()
@@ -73,7 +70,6 @@ public class AdIntegrationTests {
                 .getSession();
     }
 
-    // ********************* Sanity Tests ********************** //
     @Test
     public void contextLoads() {
         // Sanity Test, just to make sure the MVC bean is working
@@ -86,21 +82,18 @@ public class AdIntegrationTests {
         assertNotNull(httpSession);
     }
 
-    //    // ******************** CRUD Testing *********************** //
-//    // We now need to check to make sure that posting ads/blog posts works, as well as editing/deleting/etc
     @Test
     public void testCreateAd() throws Exception {
         // Makes a Post request to /ads/create and expect a redirection to the Ad
         this.mvc.perform(
-                post("/ads/create").with(csrf())
-                        .session((MockHttpSession) httpSession)
-                        // Add all the required parameters to your request like this
-                        .param("title", "test")
-                        .param("description", "for sale"))
+                        post("/ads/create").with(csrf())
+                                .session((MockHttpSession) httpSession)
+                                // Add all the required parameters to your request like this
+                                .param("title", "test")
+                                .param("description", "for sale"))
                 .andExpect(status().is3xxRedirection());
     }
 
-    // ******************* Test displaying an Ad, and showing all ads *********** //
     @Test
     public void testShowAd() throws Exception {
 
@@ -125,9 +118,13 @@ public class AdIntegrationTests {
                 .andExpect(content().string(containsString("Viewing All Ads")))
                 // Test the dynamic content of the page
                 .andExpect(content().string(containsString(existingAd.getTitle())));
+
+        for (Ad ad : ads){
+            this.mvc.perform(get("/ads"))
+                    .andExpect(content().string(containsString(existingAd.getTitle())));
+        }
     }
 
-    // *************************** Test Editing an Ad **************************** //
     @Test
     public void testEditAd() throws Exception {
         // Gets the first Ad for tests purposes
@@ -135,10 +132,10 @@ public class AdIntegrationTests {
 
         // Makes a Post request to /ads/{id}/edit and expect a redirection to the Ad show page
         this.mvc.perform(
-                post("/ads/" + existingAd.getId() + "/edit").with(csrf())
-                        .session((MockHttpSession) httpSession)
-                        .param("title", "edited title")
-                        .param("description", "edited description"))
+                        post("/ads/" + existingAd.getId() + "/edit").with(csrf())
+                                .session((MockHttpSession) httpSession)
+                                .param("title", "edited title")
+                                .param("description", "edited description"))
                 .andExpect(status().is3xxRedirection());
 
         // Makes a GET request to /ads/{id} and expect a redirection to the Ad show page
@@ -149,25 +146,27 @@ public class AdIntegrationTests {
                 .andExpect(content().string(containsString("edited description")));
     }
 
-    // *********************************** TEST DELETING AN AD ************************** //
     @Test
     public void testDeleteAd() throws Exception {
         // Creates a test Ad to be deleted
         this.mvc.perform(
-                post("/ads/create").with(csrf())
-                        .session((MockHttpSession) httpSession)
-                        .param("title", "ad to be deleted")
-                        .param("description", "won't last long"))
+                        post("/ads/create").with(csrf())
+                                .session((MockHttpSession) httpSession)
+                                .param("title", "ad to be deleted")
+                                .param("description", "won't last long"))
                 .andExpect(status().is3xxRedirection());
 
         // Get the recent Ad that matches the title
-        Ad existingAd = adsDao.findByTitle("ad to be deleted");
+        Ad existingAd = adsDao.findFirstByTitle("ad to be deleted");
 
         // Makes a Post request to /ads/{id}/delete and expect a redirection to the Ads index
         this.mvc.perform(
-                post("/ads/" + existingAd.getId() + "/delete").with(csrf())
-                        .session((MockHttpSession) httpSession)
-                        .param("id", String.valueOf(existingAd.getId())))
+                        post("/ads/" + existingAd.getId() + "/delete").with(csrf())
+                                .session((MockHttpSession) httpSession)
+                                .param("id", String.valueOf(existingAd.getId())))
                 .andExpect(status().is3xxRedirection());
     }
+
+
+
 }
