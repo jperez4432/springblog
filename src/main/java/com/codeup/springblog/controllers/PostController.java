@@ -4,7 +4,7 @@ import com.codeup.springblog.models.Post;
 import com.codeup.springblog.models.User;
 import com.codeup.springblog.repositories.PostRepository;
 import com.codeup.springblog.repositories.UserRepository;
-import com.codeup.springblog.services.EmailService;
+// import com.codeup.springblog.services.EmailService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.*;
 public class PostController {
     private final PostRepository postDao;
     private final UserRepository userDao;
-    private final EmailService emailSvc;
+   // private final EmailService emailSvc;
 
-    public PostController(PostRepository postDao, UserRepository userDao, EmailService emailSvc) {
+    public PostController(PostRepository postDao, UserRepository userDao) {
         this.postDao = postDao;
         this.userDao = userDao;
-        this.emailSvc = emailSvc;
+
     }
 
     @GetMapping("/posts")
@@ -100,7 +100,7 @@ public class PostController {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         post.setUser(currentUser);
         postDao.save(post);
-        emailSvc.prepareAndSend("lex.zavala7@gmail.com", "Thank you for creating a post " + post.getUser().getUsername() + "!", "You created a post titled: " + post.getTitle());
+      //  emailSvc.prepareAndSend("lex.zavala7@gmail.com", "Thank you for creating a post " + post.getUser().getUsername() + "!", "You created a post titled: " + post.getTitle());
         return "redirect:/posts";
     }
 }

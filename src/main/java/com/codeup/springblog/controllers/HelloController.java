@@ -1,17 +1,17 @@
 package com.codeup.springblog.controllers;
 
-import com.codeup.springblog.services.EmailService;
+//import com.codeup.springblog.services.EmailService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 class HelloController {
-    private final EmailService emailSvc;
+   // private final EmailService emailSvc;
 
-    public HelloController(EmailService emailSvc) {
-        this.emailSvc = emailSvc;
-    }
+//    public HelloController(EmailService emailSvc) {
+//      //  this.emailSvc = emailSvc;
+//    }
 
     @GetMapping("/hello")
     @ResponseBody
@@ -33,7 +33,7 @@ class HelloController {
     @PostMapping("/join")
     public String joinCohort(@RequestParam(name = "cohort") String cohort, Model model) {
         model.addAttribute("cohort", "Welcome to " + cohort + "!");
-        emailSvc.prepareAndSend("jperez4432@gmail.com", "hello! welcome to " + cohort + "!", "Thank you for attending our web development program!");
+     //   emailSvc.prepareAndSend("jperez4432@gmail.com", "hello! welcome to " + cohort + "!", "Thank you for attending our web development program!");
         return "join";
     }
 
