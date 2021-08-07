@@ -1,22 +1,32 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/">
 <head>
-    <meta charset="UTF-8" />
-    <title>Sign up</title>
+    <head th:replace="partials/head :: head ('Welcome!')"/>
+    <meta charset="UTF-8"/>
+    <title>Log In</title>
 </head>
 <body>
-<h1>Create an account</h1>
-<form th:action="@{/sign-up}" method="POST" th:object="${user}">
-    <label for="username">Username</label>
-    <input id="username" th:field="*{username}" />
-
-    <label for="email">Email</label>
-    <input id="email" th:field="*{email}" />
-
-    <label for="password">Password</label>
-    <input id="password" type="password" th:field="*{password}" />
-
-    <input value="Sign me up!" type="submit" />
-</form>
+<nav th:replace="partials/navbar :: navbar"/>
+<div class="card">
+    <h1>Create an account</h1>
+<!--make these fit properly! then adjust the other ones. seems like multiple inputs from input groups in bootstrap may be the best way.
+ testing in the emaill span but its going mehh, find a better way if possible so theyre flush -->
+<!--    pages seem to connect properly and if not the security config java class will help tremendously paired with the controllers.-->
+    <form th:action="@{/register}" method="POST" th:object="${user}">
+        <div class="input-group" style="margin-bottom: 1em;">
+            <span class="input-group-text" for="username">Username</span>
+            <input type="text" id="username" th:field="*{username}"/>
+        </div>
+        <div class="input-group">
+            <span class="input-group-text" for="email" style="margin-bottom: 1em; margin-right: 1em;">Email</span>
+            <input id="email" th:field="*{email}"/>
+        </div>
+        <div class="input-group">
+            <span class="input-group-text" for="password" style="margin-bottom: 1em;">Password</span>
+            <input id="password" type="password" th:field="*{password}"/>
+        </div>
+        <button value="Sign me up!" type="submit">Sign Me Up!</button>
+    </form>
+</div>
 </body>
 </html>
