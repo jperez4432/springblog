@@ -1,12 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<head th:replace="partials/head :: head ('Viewing All Posts')" />
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" xmlns="http://www.w3.org/1999/html">
+<head th:replace="partials/head :: head ('Viewing All Posts')"/>
 <body class="main">
-<nav th:replace="partials/navbar :: navbar" />
+<nav th:replace="partials/navbar :: navbar"/>
 <header></header>
 
-<main class="container">
+<!--<form action="/posts/create" th:action="@{/posts/create}" method="post" th:object="${post}">-->
+<!--    <main class="container">-->
+<!--        <div class="mb-3">-->
+<!--            <label for="title" class="form-label">Title</label>-->
+<!--            <input id="title" name="title" type="text" class="validate" th:field="*{title}"/>-->
+<!--        </div>-->
+<!--        <div class="mb-3">-->
+<!--            <label for="body" name="body" th:field="*{body}">Body</label>-->
+<!--            <textarea id="body" name="body" th:field="*{body}"></textarea>-->
+<!--        </div>-->
+<!--    </main>-->
+<!--</form>-->
+<main>
     <div class="card">
         <div class="card-content">
             <form action="/posts/create" th:action="@{/posts/create}" method="post"  th:object="${post}">
@@ -27,7 +39,6 @@
         </div>
     </div>
 </main>
-
 <!--<form action="/ads/create" method="post">-->
 <!--    Title:-->
 <!--    <input name="title" />-->
