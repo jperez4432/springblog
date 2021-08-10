@@ -100,7 +100,7 @@ public class PostController {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         post.setUser(currentUser);
         postDao.save(post);
-      //  emailSvc.prepareAndSend("lex.zavala7@gmail.com", "Thank you for creating a post " + post.getUser().getUsername() + "!", "You created a post titled: " + post.getTitle());
+      //  emailSvc.prepareAndSend("jperez4432@gmail.com", "Thank you for creating a post " + post.getUser().getUsername() + "!", "You created a post titled: " + post.getTitle());
         return "redirect:/posts";
     }
 }
