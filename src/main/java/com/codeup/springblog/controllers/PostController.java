@@ -28,19 +28,23 @@ public class PostController {
         return "posts/index";
     }
 
-    @GetMapping("/posts/{id}/edit")
+    @GetMapping("/posts/edit/{id}")
     public String getOne(Model model,@PathVariable long id){
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Post post = postDao.getById(id);
-        if (currentUser.getId() == post.getUser().getId()){
+        //add a type of popup so if a different user tries to edit it at least lets them know
+//        if (currentUser.getId() == post.getUser().getId()){
+//
+//
             model.addAttribute("post", postDao.getById(id));
             return "posts/edit";
-        }  else {
-            return "redirect:/posts/" + id;
-        }
+
+//        }  else {
+//            return "redirect:/posts/" + id;
+//        }
     }
 
-    @PostMapping("/posts/{id}/edit")
+    @PostMapping("/posts/edit/{id}")
     public String editOne(Model model,@PathVariable long id, @ModelAttribute Post post){
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Post postFromDB = postDao.getById(id);
@@ -50,7 +54,6 @@ public class PostController {
         }
         return "redirect:/posts/" + id;
     }
-
 
     @GetMapping("/posts/{id}")
     public String showOne(Model model,@PathVariable long id){

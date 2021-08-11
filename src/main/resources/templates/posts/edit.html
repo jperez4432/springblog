@@ -1,29 +1,34 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<head th:replace="partials/head :: head ('Edit Post')" />
-<body class="main">
-<nav th:replace="partials/navbar :: navbar" />
+<head th:replace="partials/head :: head ('Edit Post')"/>
+<body class="main" style="background-color: lightgrey">
+<nav th:replace="partials/navbar :: navbar"/>
 <header></header>
-<main class="container">
-    <div class="card grey-body">
-            <form action="" th:action="@{/posts/{id}/edit(id=${id})}" method="post" th:object="${post}">
+<main>
+<!--the th action here is the other way to map them, i feel like this should work judging by the delete button/controller but need to keep messing with it because-->
+<!--    it doesnt as it is. if this does end up working with the id = post.id then change the other files this involves and controllers
+the submit button currently does send you back to the single post page but it does not update the edit-->
+    <form action="" th:action="@{/posts/edit/{id}(id = ${post.id})}" method="post" th:object="${post}">
 
-                    <div class="card-title input-field">
-                        <label for="title">Title</label>
-                        <input id="title" name="title" type="text" class="validate" th:field="*{title}" th:value="*{title}" />
-                    </div>
+        <div class="form-outline mb-4 px-5">
+            <label for="title">Title</label>
+            <input id="title" name="title" type="text" class="validate form-control" th:field="*{title}"
+                   th:value="*{title}"/>
+        </div>
 
-                    <div class="card-body input-field">
-                        <label for="body">Body</label>
-                        <textarea id="body" name="body" th:field="*{body}" th:value="*{body}"></textarea>
-                    </div>
+        <div class="form-outline mb-4 px-5">
+            <label class="form-label" for="body">Body</label>
+            <textarea id="body" name="body" class="form-control" rows="6" th:field="*{body}" th:value="*{body}"></textarea>
+        </div>
+        <div class="px-5">
+            <button type="submit" value="submit" class="btn btn-primary btn-block mb-4">Submit</button>
+        </div>
+    </form>
 
-                <button type="submit" value="submit" class="btn-small btn-primary accent-3">Submit</button>
-            </form>
-    </div>
 </main>
-<footer th:replace="partials/footer :: footer" />
-
+<br>
+<footer th:replace="partials/footer :: footer"/>
 </body>
+
 </html>

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" xmlns="http://www.w3.org/1999/html">
 <head th:replace="partials/head :: head ('Viewing All Posts')"/>
-<body class="main">
+<body class="main" style="background-color: lightgrey">
 <nav th:replace="partials/navbar :: navbar"/>
 <header></header>
 
@@ -19,25 +19,24 @@
 <!--    </main>-->
 <!--</form>-->
 <main>
-    <div class="card">
-        <div class="card-content">
-            <form action="/posts/create" th:action="@{/posts/create}" method="post"  th:object="${post}">
-                <div class="row">
-                    <div class="input-field col-12">
-                        <input id="title" name="title" type="text" class="validate" th:field="*{title}"/>
-                        <label for="title">Title</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col-12">
-                        <textarea id="body" name="body" th:field="*{body}"></textarea>
-                        <label for="body">Body</label>
-                    </div>
-                </div>
-                <button type="submit" value="submit" class="btn-primary btn-small">Submit</button>
-            </form>
+
+    <form action="/posts/create" th:action="@{/posts/create}" method="post" th:object="${post}">
+
+        <div class="form-outline mb-4 px-5">
+            <label for="title">Title</label>
+            <input id="title" name="title" type="text" class="validate form-control" th:field="*{title}"/>
         </div>
-    </div>
+
+        <div class="form-outline mb-4 px-5">
+            <label class="form-label" for="body">Body</label>
+            <textarea id="body" name="body" class="form-control" rows="6" th:field="*{body}"></textarea>
+        </div>
+
+        <div class="px-5">
+            <button type="submit" value="submit" class="btn btn-primary btn-block mb-4">Submit</button>
+        </div>
+    </form>
+
 </main>
 <!--<form action="/ads/create" method="post">-->
 <!--    Title:-->
